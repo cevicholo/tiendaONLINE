@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SABOR PERUANO | Pedidos Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { 500: '#e11d48', 600: '#be123c', 900: '#881337' },
+                        whatsapp: '#25D366'
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-stone-50 text-stone-800 font-sans">
+
+    <!-- Navbar -->
+    <header class="fixed top-0 w-full bg-white shadow-sm z-40">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
+            <h1 class="font-bold text-xl text-brand-900 tracking-wider uppercase">Sabor Peruano</h1>
+            <button onclick="toggleCart()" class="relative p-2 text-stone-600">
+                <i data-lucide="shopping-bag" class="h-6 w-6"></i>
+                <span id="cart-badge" class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full scale-0 transition-transform">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="relative h-[50vh] flex items-center justify-center mt-16 bg-stone-900 text-white">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1600" alt="Restaurante" class="absolute inset-0 w-full h-full object-cover opacity-40">
+        <div class="relative text-center px-4">
+            <h2 class="text-5xl font-extrabold mb-4">Lo mejor de la Gastronomía Peruana</h2>
+            <p class="text-lg opacity-90">Auténticos sabores que te transportarán al Perú.</p>
+        </div>
+    </section>
+
+    <!-- Menú -->
+    <section id="menu" class="py-16 max-w-7xl mx-auto px-4">
+        <h3 class="text-3xl font-bold text-center mb-12 uppercase text-brand-900">Nuestro Menú</h3>
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+    </section>
+
+    <!-- Cart Panel -->
+    <div id="cart-panel" class="fixed top-0 right-0 w-full md:w-96 h-full bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-4 border-b flex justify-between items-center">
+            <h3 class="font-bold text-lg">Tu Pedido</h3>
+            <button onclick="toggleCart()"><i data-lucide="x"></i></button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
+        <div class="p-4 border-t bg-stone-100">
+            <div class="flex justify-between font-bold text-lg mb-4"><span>Total:</span><span id="cart-total">Bs. 0.00</span></div>
+            <button onclick="checkoutWhatsApp()" class="w-full bg-whatsapp text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2">
+                <i data-lucide="message-circle"></i> Pedir por WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        const WA_NUMBER = "59177654333";
+        const menuItems = [
+            { id: 1, name: "Ceviche de Pescado", price: 80.00, image: "https://drive.google.com/uc?export=view&id=13U64g9aIt3oDg2f4ZFw8KVguQhgH_rCO" },
+            { id: 2, name: "Chaufa de Carne", price: 70.00, image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800" },
+            { id: 3, name: "Lomo Saltado", price: 60.00, image: "https://images.unsplash.com/photo-1587393855620-5991823d11b3?q=80&w=800" }
+        ];
+
+        let cart = [];
+
+        function renderMenu() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = menuItems.map(item => `
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition">
+                    <img src="${item.image}" alt="${item.name}" class="h-48 w-full object-cover">
+                    <div class="p-6">
+                        <h4 class="font-bold text-xl mb-2">${item.name}</h4>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-brand-500">Bs. ${item.price.toFixed(2)}</span>
+                            <button onclick="addToCart(${item.id})" class="bg-stone-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-brand-600 transition">Agregar</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(id) {
+            const item = menuItems.find(i => i.id === id);
+            const exists = cart.find(i => i.id === id);
+            if (exists) exists.quantity++;
+            else cart.push({...item, quantity: 1});
+            updateUI();
+        }
+
+        function updateUI() {
+            const container = document.getElementById('cart-items');
+            const total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
+            document.getElementById('cart-total').innerText = `Bs. ${total.toFixed(2)}`;
+            document.getElementById('cart-badge').innerText = cart.reduce((sum, i) => sum + i.quantity, 0);
+            document.getElementById('cart-badge').classList.remove('scale-0');
+            
+            container.innerHTML = cart.map(i => `
+                <div class="flex justify-between text-sm">
+                    <span>${i.name} x ${i.quantity}</span>
+                    <span class="font-bold">Bs. ${(i.price * i.quantity).toFixed(2)}</span>
+                </div>
+            `).join('');
+        }
+
+        function toggleCart() { document.getElementById('cart-panel').classList.toggle('translate-x-full'); }
+
+        function checkoutWhatsApp() {
+            const msg = "¡Hola! Quiero pedir: " + cart.map(i => `${i.name} (${i.quantity})`).join(', ');
+            window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`);
+        }
+
+        renderMenu();
+    </script>
+</body>
+</html>
