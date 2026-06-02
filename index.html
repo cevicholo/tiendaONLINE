@@ -1,125 +1,645 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SABOR PERUANO | Pedidos Online</title>
+    <title>Ceviche Frutos del Mar - Tienda Online</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        brand: { 500: '#e11d48', 600: '#be123c', 900: '#881337' },
-                        whatsapp: '#25D366'
+                        marine: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0284c7',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        turquoise: {
+                            400: '#22d3ee',
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                        },
+                        gold: {
+                            500: '#d97706',
+                            600: '#b45309',
+                        }
                     }
                 }
             }
         }
     </script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0284c7;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #075985;
+        }
+    </style>
 </head>
-<body class="bg-stone-50 text-stone-800 font-sans">
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen relative overflow-x-hidden">
 
-    <!-- Navbar -->
-    <header class="fixed top-0 w-full bg-white shadow-sm z-40">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
-            <h1 class="font-bold text-xl text-brand-900 tracking-wider uppercase">Sabor Peruano</h1>
-            <button onclick="toggleCart()" class="relative p-2 text-stone-600">
-                <i data-lucide="shopping-bag" class="h-6 w-6"></i>
-                <span id="cart-badge" class="absolute top-0 right-0 bg-brand-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full scale-0 transition-transform">0</span>
-            </button>
+    <!-- HEADER / BANNER HERO -->
+    <header class="relative bg-marine-900 text-white overflow-hidden shadow-lg">
+        <!-- SVG Decorativo de fondo olas -->
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
+            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#ffffff" fill-opacity="1" d="M0,192L48,197.3C96,203,192,213,288,192C384,171,480,117,576,122.7C672,128,768,192,864,208C960,224,1056,192,1152,165.3C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
         </div>
-    </header>
 
-    <!-- Hero -->
-    <section class="relative h-[50vh] flex items-center justify-center mt-16 bg-stone-900 text-white">
-        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1600" alt="Restaurante" class="absolute inset-0 w-full h-full object-cover opacity-40">
-        <div class="relative text-center px-4">
-            <h2 class="text-5xl font-extrabold mb-4">Lo mejor de la Gastronomía Peruana</h2>
-            <p class="text-lg opacity-90">Auténticos sabores que te transportarán al Perú.</p>
-        </div>
-    </section>
+        <div class="max-w-6xl mx-auto px-4 py-8 md:py-12 relative z-10">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <!-- Información Principal -->
+                <div>
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-turquoise-500/20 text-turquoise-400 border border-turquoise-500/30 mb-3">
+                        🐟 ESPECIALIDAD EN PESCADOS Y MARISCOS
+                    </span>
+                    <h1 class="serif-title text-4xl md:text-5xl font-black tracking-tight mb-2">
+                        CEVICHE <span class="text-turquoise-400">FRUTOS DEL MAR</span>
+                    </h1>
+                    <p class="text-slate-300 max-w-xl text-sm md:text-base mb-4 font-light">
+                        Auténtica gastronomía marina peruana preparada con ingredientes ultra frescos, pasión costera y la receta tradicional.
+                    </p>
+                    
+                    <!-- Datos de contacto rápidos -->
+                    <div class="flex flex-wrap gap-y-2 gap-x-4 text-xs text-slate-300">
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4 text-turquoise-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            Av. Paragua entre 3er y 4to Anillo Nro 3750, Santa Cruz, BO.
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.59 1.98 14.124.956 11.53.956c-5.44 0-9.866 4.372-9.87 9.802 0 1.944.523 3.84 1.516 5.535l-.995 3.636 3.791-.983c1.554.84 3.125 1.282 4.675 1.282zm11.3-6.41c-.302-.15-.179-.434-.789-.738-.61-.304-1.08-.533-1.14-.658-.06-.125-.06-.25 0-.375.06-.125.269-.438.404-.595.135-.156.269-.313.404-.469.135-.156.15-.262.06-.412-.09-.15-.789-1.913-.884-2.1-.09-.188-.18-.156-.254-.156h-.615c-.21 0-.555.078-.844.39-.29.313-1.103 1.078-1.103 2.63 0 1.55 1.129 3.048 1.28 3.25.15.203 2.22 3.39 5.378 4.754.751.325 1.337.52 1.795.665.755.24 1.443.206 1.987.125.606-.09 1.861-.762 2.124-1.46.263-.697.263-1.293.185-1.418-.079-.125-.269-.187-.571-.338z"/></svg>
+                            Pedido Directo: 62104654
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Martes a Domingo: 11:00 - 17:00
+                        </span>
+                    </div>
+                </div>
 
-    <!-- Menú -->
-    <section id="menu" class="py-16 max-w-7xl mx-auto px-4">
-        <h3 class="text-3xl font-bold text-center mb-12 uppercase text-brand-900">Nuestro Menú</h3>
-        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
-    </section>
-
-    <!-- Cart Panel -->
-    <div id="cart-panel" class="fixed top-0 right-0 w-full md:w-96 h-full bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
-        <div class="p-4 border-b flex justify-between items-center">
-            <h3 class="font-bold text-lg">Tu Pedido</h3>
-            <button onclick="toggleCart()"><i data-lucide="x"></i></button>
-        </div>
-        <div id="cart-items" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
-        <div class="p-4 border-t bg-stone-100">
-            <div class="flex justify-between font-bold text-lg mb-4"><span>Total:</span><span id="cart-total">Bs. 0.00</span></div>
-            <button onclick="checkoutWhatsApp()" class="w-full bg-whatsapp text-white py-3 rounded-lg font-bold flex items-center justify-center gap-2">
-                <i data-lucide="message-circle"></i> Pedir por WhatsApp
-            </button>
-        </div>
-    </div>
-
-    <script>
-        lucide.createIcons();
-        const WA_NUMBER = "59177654333";
-        const menuItems = [
-            { id: 1, name: "Ceviche de Pescado", price: 80.00, image: "https://drive.google.com/uc?export=view&id=13U64g9aIt3oDg2f4ZFw8KVguQhgH_rCO" },
-            { id: 2, name: "Chaufa de Carne", price: 70.00, image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?q=80&w=800" },
-            { id: 3, name: "Lomo Saltado", price: 60.00, image: "https://images.unsplash.com/photo-1587393855620-5991823d11b3?q=80&w=800" }
-        ];
-
-        let cart = [];
-
-        function renderMenu() {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = menuItems.map(item => `
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden group hover:shadow-2xl transition">
-                    <img src="${item.image}" alt="${item.name}" class="h-48 w-full object-cover">
-                    <div class="p-6">
-                        <h4 class="font-bold text-xl mb-2">${item.name}</h4>
-                        <div class="flex justify-between items-center">
-                            <span class="font-bold text-brand-500">Bs. ${item.price.toFixed(2)}</span>
-                            <button onclick="addToCart(${item.id})" class="bg-stone-900 text-white px-4 py-2 rounded-lg text-sm hover:bg-brand-600 transition">Agregar</button>
+                <!-- Insignia Estilo Gastronómico -->
+                <div class="hidden md:block bg-slate-800/60 p-4 rounded-xl border border-slate-700 backdrop-blur-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-turquoise-500 rounded-lg flex items-center justify-center text-2xl">
+                            🇵🇪
+                        </div>
+                        <div>
+                            <p class="text-xs uppercase tracking-wider text-slate-400 font-bold">Insumos Importados</p>
+                            <h3 class="text-sm font-semibold text-white">Sabor 100% Auténtico</h3>
+                            <div class="flex text-amber-400 text-xs mt-1">★ ★ ★ ★ ★</div>
                         </div>
                     </div>
                 </div>
-            `).join('');
-        }
+            </div>
+        </div>
+    </header>
 
-        function addToCart(id) {
-            const item = menuItems.find(i => i.id === id);
-            const exists = cart.find(i => i.id === id);
-            if (exists) exists.quantity++;
-            else cart.push({...item, quantity: 1});
-            updateUI();
-        }
-
-        function updateUI() {
-            const container = document.getElementById('cart-items');
-            const total = cart.reduce((sum, i) => sum + (i.price * i.quantity), 0);
-            document.getElementById('cart-total').innerText = `Bs. ${total.toFixed(2)}`;
-            document.getElementById('cart-badge').innerText = cart.reduce((sum, i) => sum + i.quantity, 0);
-            document.getElementById('cart-badge').classList.remove('scale-0');
+    <!-- MAIN APP WRAPPER -->
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full">
+        <!-- CATEGORÍAS Y NAVEGACIÓN -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+            <div class="flex flex-wrap gap-2" id="categories-container">
+                <button onclick="filterCategory('todos')" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-marine-900 text-white shadow-sm transition-all duration-200">
+                    Todos los Platos
+                </button>
+                <button onclick="filterCategory('ceviches')" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-slate-600 hover:bg-slate-100 shadow-sm border border-slate-200 transition-all duration-200">
+                    Ceviches & Tiraditos
+                </button>
+                <button onclick="filterCategory('fuertes')" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-slate-600 hover:bg-slate-100 shadow-sm border border-slate-200 transition-all duration-200">
+                    Platos Fuertes
+                </button>
+                <button onclick="filterCategory('bebidas')" class="category-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-slate-600 hover:bg-slate-100 shadow-sm border border-slate-200 transition-all duration-200">
+                    Bebidas
+                </button>
+            </div>
             
-            container.innerHTML = cart.map(i => `
-                <div class="flex justify-between text-sm">
-                    <span>${i.name} x ${i.quantity}</span>
-                    <span class="font-bold">Bs. ${(i.price * i.quantity).toFixed(2)}</span>
+            <div class="text-xs text-slate-500 flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 w-fit">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Atención Online y Entregas en Santa Cruz de la Sierra</span>
+            </div>
+        </div>
+
+        <!-- GRId DE PRODUCTOS -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="products-grid">
+            <!-- Renderizado dinámico de JavaScript -->
+        </div>
+    </main>
+
+    <!-- FOOTER ESTÉTICO -->
+    <footer class="bg-slate-900 text-slate-400 py-10 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-6">
+            <div>
+                <p class="serif-title text-white font-bold text-lg mb-1">CEVICHE FRUTOS DEL MAR</p>
+                <p class="text-xs">Lo mejor de la cocina peruana en Santa Cruz de la Sierra.</p>
+            </div>
+            <div class="text-center md:text-right">
+                <p class="text-xs">© 2026 Ceviche Frutos del Mar - Todos los derechos reservados.</p>
+                <p class="text-[10px] text-slate-600 mt-1">Diseñado para máxima velocidad y eficiencia operativa de pedidos por WhatsApp.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- BOTÓN FLOTANTE DEL CARRITO -->
+    <div id="floating-cart" class="fixed bottom-6 right-6 z-40 transition-all duration-300 transform scale-0 pointer-events-none">
+        <button onclick="openCartModal()" class="flex items-center gap-3 bg-gradient-to-r from-marine-800 to-marine-950 text-white px-5 py-4 rounded-full shadow-2xl border-2 border-turquoise-400 hover:shadow-cyan-900/50 hover:scale-105 active:scale-95 transition-all duration-200 relative pointer-events-auto">
+            <!-- Icono Carrito -->
+            <svg class="w-6 h-6 text-turquoise-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+            </svg>
+            <div class="flex flex-col items-start leading-none">
+                <span class="text-[10px] uppercase font-bold text-slate-300 tracking-wider">Mi Carrito</span>
+                <span class="text-sm font-extrabold mt-1" id="floating-cart-total">Bs. 0.00</span>
+            </div>
+            <!-- Badge Contador de items -->
+            <span id="floating-cart-count" class="absolute -top-2 -right-2 bg-gradient-to-r from-amber-500 to-gold-600 text-white text-xs font-black w-6 h-6 rounded-full border-2 border-white flex items-center justify-center shadow-lg">
+                0
+            </span>
+        </button>
+    </div>
+
+    <!-- MODAL / LATERAL DEL CARRITO COMPLETO -->
+    <div id="cart-modal" class="fixed inset-0 z-50 overflow-hidden hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-slate-900/70 backdrop-blur-sm transition-opacity" onclick="closeCartModal()"></div>
+
+        <!-- Panel Deslizante -->
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md md:max-w-lg bg-white shadow-2xl flex flex-col h-full relative">
+                <!-- Header del Modal -->
+                <div class="px-6 py-5 bg-marine-900 text-white flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-6 h-6 text-turquoise-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                        <h2 class="text-lg font-bold">Tu Orden de Pedido</h2>
+                    </div>
+                    <button onclick="closeCartModal()" class="text-slate-300 hover:text-white transition-all p-1.5 hover:bg-white/10 rounded-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
                 </div>
-            `).join('');
+
+                <!-- Lista de Productos en el Carrito -->
+                <div class="flex-1 overflow-y-auto p-6" id="cart-items-list">
+                    <!-- Se inyecta dinámicamente con JavaScript -->
+                </div>
+
+                <!-- Resumen de Costos & Formulario de Checkout -->
+                <div class="border-t border-slate-200 bg-slate-50 p-6 flex flex-col gap-4">
+                    <!-- Detalle de totales -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm text-slate-600">
+                            <span>Subtotal</span>
+                            <span class="font-medium" id="summary-subtotal">Bs. 0.00</span>
+                        </div>
+                        <div class="flex justify-between text-sm text-slate-600">
+                            <span>Envío (Cálculo según zona)</span>
+                            <span class="font-medium text-emerald-600">A coordinar</span>
+                        </div>
+                        <div class="flex justify-between text-lg font-bold text-slate-900 border-t border-slate-200 pt-2">
+                            <span>Total del Pedido</span>
+                            <span id="summary-total" class="text-marine-900">Bs. 0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- FORMULARIO DE CHECKOUT -->
+                    <form id="checkout-form" onsubmit="submitOrder(event)" class="space-y-3 mt-2">
+                        <div>
+                            <label for="client-name" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Nombre Completo *</label>
+                            <input type="text" id="client-name" required class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-marine-500 focus:border-marine-500 bg-white" placeholder="Ej: Alejandra Gómez">
+                        </div>
+                        
+                        <div>
+                            <label for="client-address" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Dirección de Entrega *</label>
+                            <textarea id="client-address" rows="2" required class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-marine-500 focus:border-marine-500 bg-white" placeholder="Ej: Calle España #123, entre calles X e Y. Condominio El Prado, Torre A, dpto 402."></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label for="payment-method" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Método de Pago *</label>
+                                <select id="payment-method" required class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-marine-500 focus:border-marine-500 bg-white">
+                                    <option value="Efectivo">Efectivo</option>
+                                    <option value="Transferencia / QR">QR / Transferencia</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="client-notes" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Notas para la Cocina</label>
+                                <input type="text" id="client-notes" class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-marine-500 focus:border-marine-500 bg-white" placeholder="Ej: Sin picante / Sin cebolla">
+                            </div>
+                        </div>
+
+                        <!-- Botón de Envío -->
+                        <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-green-600 text-white py-3.5 px-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 hover:from-emerald-600 hover:to-green-700 shadow-lg active:scale-95 transition-all duration-200 mt-2">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.59 1.98 14.124.956 11.53.956c-5.44 0-9.866 4.372-9.87 9.802 0 1.944.523 3.84 1.516 5.535l-.995 3.636 3.791-.983c1.554.84 3.125 1.282 4.675 1.282zm11.3-6.41c-.302-.15-.179-.434-.789-.738-.61-.304-1.08-.533-1.14-.658-.06-.125-.06-.25 0-.375.06-.125.269-.438.404-.595.135-.156.269-.313.404-.469.135-.156.15-.262.06-.412-.09-.15-.789-1.913-.884-2.1-.09-.188-.18-.156-.254-.156h-.615c-.21 0-.555.078-.844.39-.29.313-1.103 1.078-1.103 2.63 0 1.55 1.129 3.048 1.28 3.25.15.203 2.22 3.39 5.378 4.754.751.325 1.337.52 1.795.665.755.24 1.443.206 1.987.125.606-.09 1.861-.762 2.124-1.46.263-.697.263-1.293.185-1.418-.079-.125-.269-.187-.571-.338z"/></svg>
+                            Enviar Orden de Pedido por WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST DE NOTIFICACIÓN DE ÉXITO O MENSAJE -->
+    <div id="toast" class="fixed bottom-6 left-6 z-50 bg-slate-900 text-white px-5 py-3.5 rounded-xl shadow-2xl border border-slate-700 flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <span class="text-xl" id="toast-icon">✨</span>
+        <div class="flex flex-col">
+            <span class="text-xs font-bold uppercase tracking-wider text-turquoise-400" id="toast-title">Notificación</span>
+            <span class="text-sm" id="toast-message">Mensaje informativo</span>
+        </div>
+    </div>
+
+    <!-- DATASET Y LÓGICA DE JAVASCRIPT -->
+    <script>
+        // Catálogo de Productos (Base de Datos en Memoria)
+        const products = [
+            {
+                id: 'p1',
+                name: 'Ceviche Clásico Peruano',
+                category: 'ceviches',
+                description: 'Frescos dados de pesca del día marinados en puro jugo de limón, cebolla morada en pluma, ají limo, acompañados de camote dulce cocido y choclo tierno.',
+                price: 55.00,
+                image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'p2',
+                name: 'Tiradito de Ají Amarillo',
+                category: 'ceviches',
+                description: 'Finas láminas de pescado blanco fresco cortado estilo sashimi, bañadas en una sedosa y aromática crema de ají amarillo peruano, perfumadas con lima y choclo.',
+                price: 50.00,
+                image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'p3',
+                name: 'Arroz con Mariscos',
+                category: 'fuertes',
+                description: 'Arroz de grano largo cocinado a fuego lento en un potente aderezo de ají panca, coronado con una abundante mixtura de calamares, pulpo, camarones y arvejas tiernas.',
+                price: 65.00,
+                image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'p4',
+                name: 'Jalea Real Marina',
+                category: 'fuertes',
+                description: 'Espectacular fritura de mixtura de mariscos y filetes de pescado crujientes rebozados, acompañados de yucas fritas y una refrescante salsa criolla norteña.',
+                price: 75.00,
+                image: 'https://images.unsplash.com/photo-1534080391025-347948c274e5?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'p5',
+                name: 'Leche de Tigre Frutos del Mar',
+                category: 'ceviches',
+                description: 'Concentrado cítrico y vigorizante del marinado del ceviche, con dados de pescado, choclo, cebolla, cilantro y un toque balanceado de ají limo, servido helado en copa.',
+                price: 30.00,
+                image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=600'
+            },
+            {
+                id: 'p6',
+                name: 'Chicha Morada Artesanal',
+                category: 'bebidas',
+                description: 'Nuestra bebida icónica hervida pacientemente con maíz morado importado de Perú, piña fresca, manzana roja, canela de ceilán y clavo de olor. Refrescante y 100% natural.',
+                price: 15.00,
+                image: 'https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&q=80&w=600'
+            }
+        ];
+
+        // Estado del Carrito en Memoria
+        let cart = [];
+        let currentFilter = 'todos';
+
+        // Inicializar Aplicación al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            updateCartUI();
+        });
+
+        // Filtrar categorías dinámicamente
+        function filterCategory(category) {
+            currentFilter = category;
+            
+            // Actualizar apariencia de los botones de categorías
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-marine-900', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-600', 'border-slate-200');
+            });
+
+            // Encontrar y destacar el botón clickeado
+            const targetButton = Array.from(buttons).find(btn => 
+                btn.getAttribute('onclick').includes(`'${category}'`)
+            );
+            if (targetButton) {
+                targetButton.classList.remove('bg-white', 'text-slate-600', 'border-slate-200');
+                targetButton.classList.add('bg-marine-900', 'text-white');
+            }
+
+            renderProducts();
         }
 
-        function toggleCart() { document.getElementById('cart-panel').classList.toggle('translate-x-full'); }
+        // Renderizar los productos en el Grid
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            grid.innerHTML = '';
 
-        function checkoutWhatsApp() {
-            const msg = "¡Hola! Quiero pedir: " + cart.map(i => `${i.name} (${i.quantity})`).join(', ');
-            window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`);
+            const filtered = currentFilter === 'todos' 
+                ? products 
+                : products.filter(p => p.category === currentFilter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-16 text-center">
+                        <p class="text-slate-400 text-lg">No encontramos productos en esta categoría.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(p => {
+                // Verificar si está en el carrito para mostrar cantidades
+                const cartItem = cart.find(item => item.id === p.id);
+                const quantity = cartItem ? cartItem.quantity : 0;
+
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-slate-100 flex flex-col group";
+                
+                card.innerHTML = `
+                    <!-- Imagen de Platillo -->
+                    <div class="relative overflow-hidden h-52 bg-slate-100">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=600'">
+                        <span class="absolute top-4 right-4 bg-white/95 backdrop-blur-sm text-marine-900 font-extrabold px-3 py-1.5 rounded-full text-sm shadow-md border border-slate-100">
+                            Bs. ${p.price.toFixed(2)}
+                        </span>
+                        <span class="absolute bottom-4 left-4 text-xs font-bold bg-marine-900/90 text-turquoise-300 px-3 py-1 rounded-full uppercase tracking-wider backdrop-blur-xs">
+                            ${p.category === 'ceviches' ? 'Ceviches' : p.category === 'fuertes' ? 'Platos Fuertes' : 'Bebidas'}
+                        </span>
+                    </div>
+
+                    <!-- Cuerpo de Detalles -->
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="mb-4">
+                            <h3 class="text-lg font-bold text-slate-900 mb-1 leading-tight group-hover:text-marine-900 transition-colors">
+                                ${p.name}
+                            </h3>
+                            <p class="text-xs text-slate-500 line-clamp-3 font-light leading-relaxed">
+                                ${p.description}
+                            </p>
+                        </div>
+
+                        <!-- Panel de Acción e Interacción Táctil -->
+                        <div class="pt-2">
+                            ${quantity === 0 ? `
+                                <button onclick="addToCart('${p.id}')" class="w-full bg-marine-50 hover:bg-marine-100 text-marine-900 py-3.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 border border-marine-200/50 transition-all active:scale-98">
+                                    <svg class="w-4 h-4 text-turquoise-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                                    </svg>
+                                    Agregar al Pedido
+                                </button>
+                            ` : `
+                                <div class="flex items-center justify-between bg-marine-900 text-white p-1 rounded-xl shadow-inner">
+                                    <button onclick="updateQuantity('${p.id}', -1)" class="w-10 h-10 flex items-center justify-center bg-marine-800 hover:bg-marine-700 rounded-lg text-white font-bold transition-all active:scale-90 text-lg">
+                                        –
+                                    </button>
+                                    <span class="text-sm font-black tracking-wide w-12 text-center" id="counter-${p.id}">
+                                        ${quantity}
+                                    </span>
+                                    <button onclick="updateQuantity('${p.id}', 1)" class="w-10 h-10 flex items-center justify-center bg-marine-800 hover:bg-marine-700 rounded-lg text-white font-bold transition-all active:scale-90 text-lg">
+                                        +
+                                    </button>
+                                </div>
+                            `}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
         }
 
-        renderMenu();
+        // Agregar Item al Carrito
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            const existing = cart.find(item => item.id === id);
+
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            renderProducts();
+            updateCartUI();
+            showToast('🍽️ Añadido correctamente a tu pedido', 'ÉXITO');
+        }
+
+        // Actualizar cantidades
+        function updateQuantity(id, change) {
+            const existing = cart.find(item => item.id === id);
+            if (!existing) return;
+
+            existing.quantity += change;
+
+            if (existing.quantity <= 0) {
+                cart = cart.filter(item => item.id !== id);
+                showToast('🗑️ Item removido del pedido', 'AVISO');
+            }
+
+            renderProducts();
+            updateCartUI();
+        }
+
+        // Eliminar del carrito directamente
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            renderProducts();
+            updateCartUI();
+            showToast('🗑️ Platillo removido del pedido', 'AVISO');
+        }
+
+        // Calcular costo total
+        function getCartTotal() {
+            return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        }
+
+        // Actualizar UI General del Carrito
+        function updateCartUI() {
+            const floatingCart = document.getElementById('floating-cart');
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalCost = getCartTotal();
+
+            // Actualizar Botón Flotante
+            if (totalCount > 0) {
+                floatingCart.classList.remove('scale-0', 'pointer-events-none');
+                floatingCart.classList.add('scale-105');
+                document.getElementById('floating-cart-count').textContent = totalCount;
+                document.getElementById('floating-cart-total').textContent = `Bs. ${totalCost.toFixed(2)}`;
+            } else {
+                floatingCart.classList.remove('scale-105');
+                floatingCart.classList.add('scale-0', 'pointer-events-none');
+            }
+
+            // Actualizar Resumen en el Modal
+            document.getElementById('summary-subtotal').textContent = `Bs. ${totalCost.toFixed(2)}`;
+            document.getElementById('summary-total').textContent = `Bs. ${totalCost.toFixed(2)}`;
+
+            renderCartModalList();
+        }
+
+        // Renderizar Lista interna del Modal
+        function renderCartModalList() {
+            const listContainer = document.getElementById('cart-items-list');
+            listContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center h-full py-16 text-center">
+                        <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center text-4xl mb-4">
+                            🌊
+                        </div>
+                        <p class="font-bold text-slate-800">Tu carrito está vacío</p>
+                        <p class="text-xs text-slate-500 max-w-xs mt-1">Añade los mejores ceviches y platos peruanos para empezar tu pedido.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            cart.forEach(item => {
+                const itemCost = item.price * item.quantity;
+                const div = document.createElement('div');
+                div.className = "flex items-center gap-4 py-4 border-b border-slate-100";
+                div.innerHTML = `
+                    <div class="w-14 h-14 bg-slate-100 rounded-lg overflow-hidden shrink-0">
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start mb-1">
+                            <h4 class="text-sm font-bold text-slate-900 leading-tight">${item.name}</h4>
+                            <span class="text-sm font-bold text-slate-900 ml-2">Bs. ${itemCost.toFixed(2)}</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-slate-500">Bs. ${item.price.toFixed(2)} c/u</span>
+                            <div class="flex items-center gap-2 bg-slate-100 px-2 py-1 rounded-lg">
+                                <button onclick="updateQuantity('${item.id}', -1)" class="w-6 h-6 flex items-center justify-center text-slate-600 hover:text-slate-900 font-bold text-sm">-</button>
+                                <span class="text-xs font-bold text-slate-800 w-6 text-center">${item.quantity}</span>
+                                <button onclick="updateQuantity('${item.id}', 1)" class="w-6 h-6 flex items-center justify-center text-slate-600 hover:text-slate-900 font-bold text-sm">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(div);
+            });
+        }
+
+        // Control de Apertura/Cierre de Modal
+        function openCartModal() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Bloquear scroll de fondo
+        }
+
+        function closeCartModal() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Custom Toast Notification System (Sustituye alerts del navegador)
+        function showToast(message, type = 'NOTIFICACIÓN') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toast-icon');
+            const toastTitle = document.getElementById('toast-title');
+            const toastMessage = document.getElementById('toast-message');
+
+            toastIcon.textContent = type === 'ÉXITO' ? '🎉' : type === 'AVISO' ? '⚡' : '✨';
+            toastTitle.textContent = type;
+            toastMessage.textContent = message;
+
+            // Mostrar
+            toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            // Autocerrado
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+
+        // Serializar y Enviar Pedido a WhatsApp
+        function submitOrder(event) {
+            event.preventDefault();
+
+            if (cart.length === 0) {
+                showToast('⚠️ Tu pedido está vacío. Agrega platos antes de continuar.', 'ERROR');
+                return;
+            }
+
+            const name = document.getElementById('client-name').value.trim();
+            const address = document.getElementById('client-address').value.trim();
+            const payment = document.getElementById('payment-method').value;
+            const notes = document.getElementById('client-notes').value.trim() || 'Ninguna';
+
+            if (!name || !address) {
+                showToast('⚠️ Por favor completa los campos requeridos', 'ERROR');
+                return;
+            }
+
+            // Construir Detalle Textual de los platillos ordenados
+            let itemsText = '';
+            cart.forEach(item => {
+                const subtotalItem = item.price * item.quantity;
+                itemsText += `• ${item.quantity}x ${item.name} (Bs. ${subtotalItem.toFixed(2)})\n`;
+            });
+
+            const total = getCartTotal();
+
+            // Cuerpo del mensaje formateado estéticamente
+            const message = `*🛒 NUEVO PEDIDO - CEVICHE FRUTOS DEL MAR*\n` +
+                            `---------------------------------------------\n` +
+                            `*Cliente:* ${name}\n` +
+                            `*Dirección:* ${address}\n\n` +
+                            `*Detalle del Pedido:*\n` +
+                            `${itemsText}\n` +
+                            `*Total a Pagar:* Bs. ${total.toFixed(2)}\n` +
+                            `*Método de Pago:* ${payment}\n` +
+                            `*Notas para Cocina:* ${notes}\n` +
+                            `---------------------------------------------\n` +
+                            `_Pedido enviado desde el Catálogo Digital_ 🌊`;
+
+            // Enlace oficial de WhatsApp para Bolivia (+591)
+            const whatsappNumber = "59162104654";
+            const encodedText = encodeURIComponent(message);
+            const whatsappURL = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedText}`;
+
+            // Enviar orden
+            showToast('🚀 Redirigiendo a tu WhatsApp para confirmar...', 'ÉXITO');
+            
+            setTimeout(() => {
+                window.open(whatsappURL, '_blank');
+            }, 1000);
+        }
     </script>
 </body>
 </html>
